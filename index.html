@@ -26,7 +26,10 @@
     background-color: var(--purple);
     background-image: repeating-linear-gradient(90deg, var(--purple) 0 60px, var(--purple-2) 60px 120px);
   }
-  header { text-align: center; padding: 34px 16px 6px; color: #fff; }
+  nav { display: flex; justify-content: center; gap: 8px; padding: 18px 16px 0; flex-wrap: wrap; }
+  nav a { color: var(--lav); text-decoration: none; padding: 6px 14px; border-radius: 99px; font-weight: 600; }
+  nav a.on { background: rgba(255,255,255,.14); color: #fff; }
+  header { text-align: center; padding: 14px 16px 6px; color: #fff; }
   header h1 { font-family: 'Peralta', serif; font-weight: 400; font-size: clamp(28px, 6vw, 48px); margin: 0; line-height: 1.15; }
   header h1 .br { color: var(--yellow); }
   header p { margin: 8px 0 0; color: var(--lav); font-size: 18px; }
@@ -80,6 +83,10 @@
 </style>
 </head>
 <body>
+<nav>
+  <a href="./" class="on">Class gallery</a>
+  <a href="maker/">Make a greeting</a>
+</nav>
 <header>
   <h1><span class="br">[</span> Happy Children’s Day <span class="br">]</span></h1>
   <p id="sub"></p>

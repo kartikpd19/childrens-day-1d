@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Greeting Maker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Peralta&family=Platypi:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #4A2D9C; --purple-2: #42288A; --purple-deep: #2A1766; --lav: #D1C2FF;
+    --yellow: #FFB908; --yellow-dark: #DFA00C; --ink: #1E1E1E; --muted: #6B6380;
+    --line: #E6E0F5; --soft: #F6F2FF; --ok: #1F9D6B; --err: #C8364A;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; font-family: 'Platypi', Georgia, serif; color: var(--ink);
+    background-color: var(--purple);
+    background-image: repeating-linear-gradient(90deg, var(--purple) 0 60px, var(--purple-2) 60px 120px);
+  }
+  nav { display: flex; justify-content: center; gap: 8px; padding: 18px 16px 0; flex-wrap: wrap; }
+  nav a { color: var(--lav); text-decoration: none; padding: 6px 14px; border-radius: 99px; font-weight: 600; }
+  nav a.on { background: rgba(255,255,255,.14); color: #fff; }
+  header { text-align: center; padding: 14px 16px 8px; color: #fff; }
+  header h1 { font-family: 'Peralta', serif; font-weight: 400; font-size: clamp(28px, 5vw, 44px); margin: 0; }
+  header h1 .br { color: var(--yellow); }
+  header p { margin: 6px 0 0; color: var(--lav); font-size: 17px; }
+  .banner { max-width: 1040px; margin: 10px auto 0; padding: 0 16px; }
+  .banner div { background: #FFF6DB; color: #6B4E00; border-radius: 12px; padding: 10px 14px; font-size: 15px; }
+
+  main { max-width: 1040px; margin: 0 auto; padding: 20px 16px 48px; display: grid; gap: 20px; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 820px) { main { grid-template-columns: 1fr; } }
+  .card { background: #fff; border-radius: 18px; padding: 22px; box-shadow: 0 18px 40px rgba(20, 8, 60, .35); }
+  .card h2 { margin: 0 0 14px; font-size: 20px; display: flex; align-items: center; gap: 10px; }
+  .step { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--yellow); color: #fff; font-weight: 700; font-size: 16px; transform: rotate(-6deg); }
+
+  label.lbl { display: block; font-weight: 600; margin: 16px 0 6px; }
+  input[type=text] { width: 100%; font: inherit; font-size: 18px; padding: 12px 14px; border: 2px solid var(--line); border-radius: 12px; outline: none; }
+  input[type=text]:focus { border-color: var(--purple); }
+
+  .photo-row { display: grid; grid-template-columns: 170px 1fr; gap: 16px; align-items: start; }
+  @media (max-width: 420px) { .photo-row { grid-template-columns: 1fr; } }
+  .frame { position: relative; width: 170px; aspect-ratio: 980 / 1427; background: #fff; padding: 9px; border-radius: 4px; box-shadow: 0 8px 20px rgba(20, 8, 60, .25); transform: rotate(-2deg); }
+  .frame-inner { width: 100%; height: 100%; overflow: hidden; background: #EEE9FA; display: grid; place-items: center; color: var(--muted); font-size: 13px; text-align: center; cursor: pointer; touch-action: none; }
+  .frame-inner.has-photo { cursor: grab; }
+  .frame-inner.dragging { cursor: grabbing; }
+  .frame-inner img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; user-select: none; }
+  .drop { border: 2px dashed var(--lav); border-radius: 14px; padding: 18px; text-align: center; color: var(--muted); cursor: pointer; transition: background .15s, border-color .15s; }
+  .drop:hover, .drop.over { background: var(--soft); border-color: var(--purple); }
+  .drop strong { color: var(--purple); }
+  .hint { font-size: 14px; color: var(--muted); margin-top: 10px; line-height: 1.4; }
+  .link { background: none; border: 0; padding: 0; color: var(--purple); font: inherit; font-size: 14px; text-decoration: underline; cursor: pointer; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: inherit; font-weight: 700; font-size: 18px; border: 0; border-radius: 14px; padding: 14px 22px; cursor: pointer; text-decoration: none; }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--yellow); color: #fff; width: 100%; margin-top: 20px; box-shadow: 0 5px 0 var(--yellow-dark); }
+  .btn-primary:disabled { background: #D9D4E6; box-shadow: 0 5px 0 #C4BED6; cursor: not-allowed; }
+  .btn-dl { background: var(--purple); color: #fff; flex: 1; box-shadow: 0 5px 0 var(--purple-deep); }
+  .btn-dl.alt { background: #fff; color: var(--purple); border: 2px solid var(--purple); box-shadow: 0 5px 0 var(--lav); }
+  .btn-ghost { background: none; color: var(--purple); font-size: 16px; padding: 8px; }
+  .err { color: var(--err); font-size: 15px; margin-top: 10px; min-height: 1em; }
+
+  .empty { text-align: center; color: var(--muted); padding: 30px 10px; }
+  .empty .big { font-family: 'Peralta', serif; font-size: 26px; color: var(--lav); }
+  .progress-wrap { padding: 20px 4px; }
+  .stage { font-weight: 600; font-size: 18px; margin-bottom: 4px; }
+  .sub { color: var(--muted); font-size: 15px; margin-bottom: 14px; }
+  .bar { height: 16px; background: #EEE9FA; border-radius: 99px; overflow: hidden; }
+  .bar > div { height: 100%; width: 0; background: repeating-linear-gradient(45deg, var(--yellow) 0 14px, #FFC93A 14px 28px); border-radius: 99px; transition: width .3s; }
+  .keep { color: var(--muted); font-size: 14px; margin-top: 14px; }
+  video { width: 100%; max-height: 520px; border-radius: 12px; background: var(--purple); display: block; }
+  .dl-row { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+  .dl-row .btn { min-width: 150px; }
+  .done-title { display: flex; align-items: center; gap: 8px; color: var(--ok); font-weight: 700; margin-bottom: 12px; }
+
+  .list-card { grid-column: 1 / -1; }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); flex-wrap: wrap; }
+  .list li:first-child { border-top: 0; }
+  .list .who { flex: 1; min-width: 160px; font-weight: 600; }
+  .list .meta { color: var(--muted); font-size: 14px; font-weight: 400; }
+  .pill { font: inherit; font-size: 14px; font-weight: 700; padding: 6px 12px; border-radius: 99px; border: 0; cursor: pointer; }
+  .pill-mp4 { background: var(--purple); color: #fff; }
+  .pill-gif { background: #F1ECFF; color: var(--purple); }
+  .list-empty { color: var(--muted); }
+  .count { color: var(--muted); font-weight: 400; font-size: 16px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="../">Class gallery</a>
+  <a href="./" class="on">Make a greeting</a>
+</nav>
+<header>
+  <h1><span class="br">[</span> Greeting Maker <span class="br">]</span></h1>
+  <p>Happy Children’s Day: one personalised video per student</p>
+</header>
+<div class="banner" id="support" hidden></div>
+
+<main>
+  <section class="card">
+    <h2><span class="step">1</span> Student details</h2>
+    <div class="photo-row">
+      <div class="frame" title="Drag to choose which part of the photo shows">
+        <div class="frame-inner" id="frame">
+          <span id="framePlaceholder">Photo<br>preview</span>
+          <img id="preview" alt="" hidden>
+        </div>
+      </div>
+      <div>
+        <div class="drop" id="drop" role="button" tabindex="0">
+          <span id="dropLabel"><strong>Choose a photo</strong><br>or drop it here</span>
+        </div>
+        <input type="file" id="file" accept="image/*" hidden>
+        <p class="hint" id="cropHint" hidden>Drag the photo in the frame to move it. <button class="link" id="resetCrop" type="button">Reset</button></p>
+        <p class="hint">Your photo stays on this device. Nothing is uploaded.</p>
+      </div>
+    </div>
+
+    <label class="lbl" for="name">Student’s name</label>
+    <input type="text" id="name" placeholder="e.g. Aarav Sharma" maxlength="60" autocomplete="off">
+
+    <button class="btn btn-primary" id="go" disabled>Make the video</button>
+    <div class="err" id="err"></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="step">2</span> Video</h2>
+    <div id="v-empty" class="empty">
+      <div class="big">[ your video ]</div>
+      <p>Add a photo and a name, then press <b>Make the video</b>.<br>It takes about 30–60 seconds.</p>
+    </div>
+    <div id="v-progress" class="progress-wrap" hidden>
+      <div class="stage" id="stage"></div>
+      <div class="sub" id="stageSub"></div>
+      <div class="bar"><div id="barFill"></div></div>
+      <p class="keep">Keep this tab open until it finishes.</p>
+    </div>
+    <div id="v-done" hidden>
+      <div class="done-title">✓ <span id="doneName"></span>’s video is ready</div>
+      <video id="video" controls loop playsinline muted></video>
+      <div class="dl-row">
+        <button class="btn btn-dl" id="dlMp4" type="button">⬇ Download MP4</button>
+        <button class="btn btn-dl alt" id="dlGif" type="button">⬇ Download GIF</button>
+      </div>
+      <button class="btn btn-ghost" id="another" type="button">+ Make another student</button>
+    </div>
+    <div id="v-error" class="empty" hidden>
+      <p class="err" id="jobErr"></p>
+      <button class="btn btn-ghost" id="retry" type="button">Try again</button>
+    </div>
+  </section>
+
+  <section class="card list-card">
+    <h2>Made so far <span class="count" id="count"></span></h2>
+    <ul class="list" id="list"></ul>
+    <p class="list-empty" id="listEmpty">Nothing yet. Videos you make appear here until you close this page, so download them before you leave.</p>
+  </section>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>
