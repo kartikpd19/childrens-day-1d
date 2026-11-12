@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Happy Children's Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Peralta&family=Platypi:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #4A2D9C;
+    --purple-2: #42288A;
+    --purple-deep: #2A1766;
+    --lav: #D1C2FF;
+    --yellow: #FFB908;
+    --yellow-dark: #DFA00C;
+    --ink: #1E1E1E;
+    --muted: #6B6380;
+    --line: #E6E0F5;
+    --soft: #F4F0FF;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; font-family: 'Platypi', Georgia, serif; color: var(--ink);
+    background-color: var(--purple);
+    background-image: repeating-linear-gradient(90deg, var(--purple) 0 60px, var(--purple-2) 60px 120px);
+  }
+  header { text-align: center; padding: 34px 16px 6px; color: #fff; }
+  header h1 { font-family: 'Peralta', serif; font-weight: 400; font-size: clamp(28px, 6vw, 48px); margin: 0; line-height: 1.15; }
+  header h1 .br { color: var(--yellow); }
+  header p { margin: 8px 0 0; color: var(--lav); font-size: 18px; }
+  main { max-width: 1180px; margin: 0 auto; padding: 18px 16px 56px; }
+  .card { background: #fff; border-radius: 18px; padding: 20px; box-shadow: 0 18px 40px rgba(20, 8, 60, .35); }
+
+  .bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .search { font: inherit; font-size: 16px; padding: 10px 12px; border: 2px solid var(--line); border-radius: 12px; outline: none; flex: 1; min-width: 180px; max-width: 320px; }
+  .search:focus { border-color: var(--purple); }
+  .dl-all { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: inherit; font-weight: 700; font-size: 16px; border: 0; border-radius: 12px; padding: 11px 18px; cursor: pointer; text-decoration: none; white-space: nowrap; }
+  .btn:disabled { opacity: .55; cursor: wait; }
+  .btn-p { background: var(--purple); color: #fff; box-shadow: 0 4px 0 var(--purple-deep); }
+  .btn-l { background: #fff; color: var(--purple); border: 2px solid var(--purple); box-shadow: 0 4px 0 var(--lav); }
+  .btn-y { background: var(--yellow); color: #fff; box-shadow: 0 4px 0 var(--yellow-dark); }
+  .btn-w { background: #fff; color: var(--purple); box-shadow: 0 4px 0 var(--lav); }
+  .zipmsg { width: 100%; color: var(--muted); font-size: 14px; min-height: 1em; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+  .tile { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+  .tile button.open { border: 0; padding: 0; cursor: pointer; display: block; background: var(--purple); aspect-ratio: 2 / 3; position: relative; }
+  .tile button.open img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile .play { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; transition: opacity .15s; background: rgba(42,23,102,.35); color: #fff; font-size: 34px; }
+  .tile button.open:hover .play, .tile button.open:focus-visible .play { opacity: 1; }
+  .tile .meta { padding: 9px 10px 11px; display: flex; flex-direction: column; gap: 7px; }
+  .tile .name { font-weight: 700; font-size: 15px; line-height: 1.25; word-break: break-word; }
+  .roll { display: inline-grid; place-items: center; min-width: 24px; height: 24px; padding: 0 6px; margin-right: 6px; border-radius: 7px; background: var(--yellow); color: #fff; font-size: 13px; vertical-align: 1px; }
+  .tile .acts { display: flex; gap: 6px; }
+  .tile .acts a { flex: 1; text-align: center; text-decoration: none; font-weight: 700; font-size: 14px; border-radius: 9px; padding: 7px 4px; }
+  .tile .acts .g { background: var(--purple); color: #fff; }
+  .tile .acts .m { background: var(--soft); color: var(--purple); }
+  .empty { text-align: center; color: var(--muted); padding: 30px; }
+
+  /* viewer */
+  .viewer { position: fixed; inset: 0; background: rgba(20, 10, 50, .94); display: flex; flex-direction: column; align-items: center; padding: 14px 12px; gap: 10px; z-index: 10; color: #fff; }
+  .viewer[hidden] { display: none; }
+  .v-top { width: 100%; max-width: 1000px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .v-title { font-family: 'Peralta', serif; font-size: clamp(18px, 3.5vw, 28px); }
+  .v-title .roll { font-family: 'Platypi', serif; font-size: 16px; min-width: 30px; height: 30px; vertical-align: 4px; }
+  .v-count { color: var(--lav); font-size: 14px; }
+  .close { background: rgba(255,255,255,.12); color: #fff; border: 0; border-radius: 50%; width: 44px; height: 44px; font-size: 22px; cursor: pointer; flex: none; }
+  .v-mid { flex: 1; min-height: 0; width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .v-frame { height: 100%; aspect-ratio: 2 / 3; max-width: calc(100% - 120px); position: relative; border-radius: 12px; overflow: hidden; background: var(--purple); }
+  .v-frame img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .v-frame .loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--lav); }
+  .arrow { flex: none; width: 52px; height: 52px; border-radius: 50%; border: 0; cursor: pointer; font-size: 26px; background: rgba(255,255,255,.12); color: #fff; }
+  .arrow:hover { background: rgba(255,255,255,.24); }
+  @media (max-width: 560px) { .arrow { width: 40px; height: 40px; font-size: 20px; } .v-mid { gap: 4px; } .v-frame { max-width: calc(100% - 88px); } }
+  .v-acts { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  footer { text-align: center; color: var(--lav); font-size: 14px; padding: 0 16px 30px; }
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="br">[</span> Happy Children’s Day <span class="br">]</span></h1>
+  <p id="sub"></p>
+</header>
+
+<main>
+  <section class="card">
+    <div class="bar">
+      <input class="search" id="search" type="search" placeholder="Find a student…" aria-label="Find a student">
+      <div class="dl-all">
+        <button class="btn btn-p" id="zipGif" type="button">⬇ Download all GIFs</button>
+        <button class="btn btn-l" id="zipMp4" type="button">⬇ Download all MP4s</button>
+      </div>
+      <div class="zipmsg" id="zipmsg"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>Loading…</div>
+  </section>
+</main>
+<footer id="foot"></footer>
+
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Greeting">
+  <div class="v-top">
+    <div>
+      <div class="v-title"><span class="roll" id="vRoll"></span><span id="vName"></span></div>
+      <div class="v-count" id="vCount"></div>
+    </div>
+    <button class="close" id="close" aria-label="Close">✕</button>
+  </div>
+  <div class="v-mid">
+    <button class="arrow" id="prev" aria-label="Previous">‹</button>
+    <div class="v-frame"><div class="loading" id="vLoading">Loading…</div><img id="vGif" alt=""></div>
+    <button class="arrow" id="next" aria-label="Next">›</button>
+  </div>
+  <div class="v-acts">
+    <a class="btn btn-y" id="vGifDl" download>⬇ Download GIF</a>
+    <a class="btn btn-w" id="vMp4Dl" download>⬇ Download MP4</a>
+  </div>
+</div>
+
+<script type="module">
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let students = [];
+let idx = -1;
+
+const res = await fetch('data.json', { cache: 'no-store' });
+const data = await res.json();
+students = data.students;
+document.title = `Happy Children's Day · Class ${data.className}`;
+$('sub').textContent = `Class ${data.className} · ${data.school} · ${data.year}`;
+$('foot').textContent = `${students.length} greetings · tap a picture to watch`;
+
+function renderGrid() {
+  const f = $('search').value.trim().toLowerCase();
+  $('grid').innerHTML = students.map((s, i) => {
+    if (f && !(s.name.toLowerCase().includes(f) || String(s.no) === f)) return '';
+    return `<div class="tile">
+      <button class="open" data-i="${i}" aria-label="Watch ${esc(s.name)}"><img src="thumb/${encodeURIComponent(s.file)}.jpg" alt="" loading="lazy"><span class="play">▶</span></button>
+      <div class="meta">
+        <div class="name">${s.no != null ? `<span class="roll">${s.no}</span>` : ''}${esc(s.name)}</div>
+        <div class="acts"><a class="g" href="gif/${encodeURIComponent(s.file)}.gif" download>GIF</a><a class="m" href="mp4/${encodeURIComponent(s.file)}.mp4" download>MP4</a></div>
+      </div>
+    </div>`;
+  }).join('');
+  $('empty').hidden = students.length > 0;
+}
+renderGrid();
+$('search').addEventListener('input', renderGrid);
+$('grid').addEventListener('click', (e) => { const b = e.target.closest('button.open'); if (b) open(+b.dataset.i); });
+
+// ---------- viewer ----------
+function open(i) {
+  idx = (i + students.length) % students.length;
+  const s = students[idx];
+  $('viewer').hidden = false;
+  document.body.style.overflow = 'hidden';
+  $('vLoading').hidden = false;
+  $('vGif').onload = () => { $('vLoading').hidden = true; };
+  $('vGif').src = `gif/${encodeURIComponent(s.file)}.gif`;
+  $('vGif').alt = s.name + '’s greeting';
+  $('vName').textContent = s.name;
+  $('vRoll').hidden = s.no == null;
+  $('vRoll').textContent = s.no ?? '';
+  $('vCount').textContent = `${idx + 1} of ${students.length}`;
+  $('vGifDl').href = `gif/${encodeURIComponent(s.file)}.gif`;
+  $('vMp4Dl').href = `mp4/${encodeURIComponent(s.file)}.mp4`;
+  history.replaceState(null, '', '#' + s.file);
+}
+function close() {
+  $('viewer').hidden = true;
+  $('vGif').removeAttribute('src');
+  document.body.style.overflow = '';
+  history.replaceState(null, '', location.pathname);
+}
+$('prev').onclick = () => open(idx - 1);
+$('next').onclick = () => open(idx + 1);
+$('close').onclick = close;
+$('viewer').addEventListener('click', (e) => { if (e.target === $('viewer') || e.target.classList.contains('v-mid')) close(); });
+document.addEventListener('keydown', (e) => {
+  if ($('viewer').hidden) return;
+  if (e.key === 'Escape') close();
+  else if (e.key === 'ArrowLeft') open(idx - 1);
+  else if (e.key === 'ArrowRight') open(idx + 1);
+});
+const at = students.findIndex((s) => s.file === decodeURIComponent(location.hash.slice(1)));
+if (at >= 0) open(at);
+
+// ---------- download all (zip built in the browser) ----------
+async function zipAll(kind) {
+  const btns = [$('zipGif'), $('zipMp4')];
+  btns.forEach((b) => (b.disabled = true));
+  try {
+    $('zipmsg').textContent = 'Preparing…';
+    const { downloadZip } = await import('https://cdn.jsdelivr.net/npm/client-zip@2.5.1/index.js');
+    let n = 0;
+    async function* files() {
+      for (const s of students) {
+        const r = await fetch(`${kind}/${encodeURIComponent(s.file)}.${kind}`);
+        if (!r.ok) continue;
+        n++;
+        $('zipmsg').textContent = `Adding ${n} of ${students.length}: ${s.name}…`;
+        yield { name: `${s.file}.${kind}`, input: await r.blob() };
+      }
+    }
+    const blob = await downloadZip(files()).blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `Childrens_Day_Class_${data.className}_${kind.toUpperCase()}s.zip`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 60000);
+    $('zipmsg').textContent = `Downloaded ${n} ${kind.toUpperCase()}s (${(blob.size / 1048576).toFixed(0)} MB).`;
+  } catch (e) {
+    $('zipmsg').textContent = 'Download failed: ' + e.message;
+  } finally {
+    btns.forEach((b) => (b.disabled = false));
+  }
+}
+$('zipGif').onclick = () => zipAll('gif');
+$('zipMp4').onclick = () => zipAll('mp4');
+</script>
+</body>
+</html>

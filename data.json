@@ -1,0 +1,207 @@
+{
+ "school": "DAV Public School, Nerul",
+ "className": "1D",
+ "year": "2026-27",
+ "students": [
+  {
+   "no": 1,
+   "name": "Aarav",
+   "file": "01_Aarav"
+  },
+  {
+   "no": 3,
+   "name": "Adhira",
+   "file": "03_Adhira"
+  },
+  {
+   "no": 4,
+   "name": "Advik",
+   "file": "04_Advik"
+  },
+  {
+   "no": 5,
+   "name": "Advik J",
+   "file": "05_Advik_J"
+  },
+  {
+   "no": 6,
+   "name": "Anandi Solankar",
+   "file": "06_Anandi_Solankar"
+  },
+  {
+   "no": 7,
+   "name": "Ananya Patil",
+   "file": "07_Ananya_Patil"
+  },
+  {
+   "no": 8,
+   "name": "Anirudh",
+   "file": "08_Anirudh"
+  },
+  {
+   "no": 9,
+   "name": "Arjun",
+   "file": "09_Arjun"
+  },
+  {
+   "no": 12,
+   "name": "Darsh",
+   "file": "12_Darsh"
+  },
+  {
+   "no": 13,
+   "name": "Dnyanshi",
+   "file": "13_Dnyanshi"
+  },
+  {
+   "no": 14,
+   "name": "Dnyanda",
+   "file": "14_Dnyanda"
+  },
+  {
+   "no": 16,
+   "name": "Gaurang",
+   "file": "16_Gaurang"
+  },
+  {
+   "no": 17,
+   "name": "Ira",
+   "file": "17_Ira"
+  },
+  {
+   "no": 18,
+   "name": "Janani",
+   "file": "18_Janani"
+  },
+  {
+   "no": 19,
+   "name": "Kartik",
+   "file": "19_Kartik"
+  },
+  {
+   "no": 20,
+   "name": "Kiansha",
+   "file": "20_Kiansha"
+  },
+  {
+   "no": 21,
+   "name": "Kiyansh",
+   "file": "21_Kiyansh"
+  },
+  {
+   "no": 22,
+   "name": "Krishang",
+   "file": "22_Krishang"
+  },
+  {
+   "no": 23,
+   "name": "Mahira",
+   "file": "23_Mahira"
+  },
+  {
+   "no": 24,
+   "name": "Mishka",
+   "file": "24_Mishka"
+  },
+  {
+   "no": 25,
+   "name": "Mistey",
+   "file": "25_Mistey"
+  },
+  {
+   "no": 26,
+   "name": "Naira",
+   "file": "26_Naira"
+  },
+  {
+   "no": 27,
+   "name": "Neeraj",
+   "file": "27_Neeraj"
+  },
+  {
+   "no": 28,
+   "name": "Neeraja",
+   "file": "28_Neeraja"
+  },
+  {
+   "no": 29,
+   "name": "Nirvi Kumari",
+   "file": "29_Nirvi_Kumari"
+  },
+  {
+   "no": 30,
+   "name": "Ravika",
+   "file": "30_Ravika"
+  },
+  {
+   "no": 31,
+   "name": "Reyanshi Verma",
+   "file": "31_Reyanshi_Verma"
+  },
+  {
+   "no": 32,
+   "name": "Rudra",
+   "file": "32_Rudra"
+  },
+  {
+   "no": 33,
+   "name": "Samar",
+   "file": "33_Samar"
+  },
+  {
+   "no": 34,
+   "name": "Sharvil",
+   "file": "34_Sharvil"
+  },
+  {
+   "no": 35,
+   "name": "Shivansh",
+   "file": "35_Shivansh"
+  },
+  {
+   "no": 36,
+   "name": "Shivansh T",
+   "file": "36_Shivansh_T"
+  },
+  {
+   "no": 37,
+   "name": "Shreeja",
+   "file": "37_Shreeja"
+  },
+  {
+   "no": 38,
+   "name": "Tanish",
+   "file": "38_Tanish"
+  },
+  {
+   "no": 39,
+   "name": "Ved",
+   "file": "39_Ved"
+  },
+  {
+   "no": 40,
+   "name": "Vidhika",
+   "file": "40_Vidhika"
+  },
+  {
+   "no": 42,
+   "name": "Vivan",
+   "file": "42_Vivan"
+  },
+  {
+   "no": 43,
+   "name": "Viyom",
+   "file": "43_Viyom"
+  },
+  {
+   "no": 44,
+   "name": "Yash",
+   "file": "44_Yash"
+  },
+  {
+   "no": 45,
+   "name": "Yatharth",
+   "file": "45_Yatharth"
+  }
+ ]
+}
